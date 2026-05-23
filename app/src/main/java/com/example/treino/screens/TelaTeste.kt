@@ -27,11 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.treino.viewmodel.TelaTesteViewModel
 
 @Composable
-fun TelaTeste(pegarNavegacao:(Unit) -> Unit, tamanho:Int, viewModel: TelaTesteViewModel = hiltViewModel()){
+fun TelaTeste(pegarNavegacao:(Unit) -> Unit,viewModel: TelaTesteViewModel = hiltViewModel()){
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val valorAnimado by animateDpAsState(
-        targetValue = if (uiState.transformar) tamanho.dp else 0.dp,
+        targetValue = if (uiState.transformar) uiState.valorRecebido!!.dp else 0.dp,
         animationSpec = tween(durationMillis = 1000),
         label = "Animação"
     )

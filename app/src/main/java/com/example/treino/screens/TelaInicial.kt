@@ -15,13 +15,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.treino.viewmodel.TelaInicialViewModel
 
 @Composable
-fun TelaIncial(pegarNavegacao:(Int) -> Unit,viewModel: TelaInicialViewModel = hiltViewModel()){
+fun TelaIncial(pegarNavegacao:(String) -> Unit,viewModel: TelaInicialViewModel = hiltViewModel()){
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -31,13 +33,13 @@ fun TelaIncial(pegarNavegacao:(Int) -> Unit,viewModel: TelaInicialViewModel = hi
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally){
 
-        Text(text = "Tela incial")
+        Text(text = uiState.mensagem ?: "", color = Color.Red, fontWeight = FontWeight.ExtraBold)
+
         OutlinedTextField(
-            value = uiState.tamanho,
-            onValueChange ={viewModel.alterarValor(it)},
-            label = {Text("Digite um valor")},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
-        )
+            value = uiState.valor,
+            onValueChange = {viewModel.alterarValor(it)},
+            label = {Text(text = "Digire um valor:")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
 
         Button(onClick = { viewModel.lancarNavegacao() })
         {
@@ -47,7 +49,7 @@ fun TelaIncial(pegarNavegacao:(Int) -> Unit,viewModel: TelaInicialViewModel = hi
 
         LaunchedEffect(Unit){
             viewModel.navegar.collect {
-                pegarNavegacao(it)
+                pegarNavegacao(uiState.valor)
             }
         }
     }

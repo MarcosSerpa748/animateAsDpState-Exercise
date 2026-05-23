@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TelaTesteRoute(
-    val tamanho:Int
+    val tamanho:String
 )

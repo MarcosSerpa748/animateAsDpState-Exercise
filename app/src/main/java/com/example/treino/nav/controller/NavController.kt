@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.treino.nav.routes.TelaInicialRoute
 import com.example.treino.nav.routes.TelaTesteRoute
 import com.example.treino.screens.TelaTeste
@@ -22,15 +21,13 @@ fun NavController(){
             })
         }
         composable<TelaTesteRoute>{
-            val valoresPassados = it.toRoute<TelaTesteRoute>()
-
             TelaTeste(pegarNavegacao = {
                 navController.navigate(TelaInicialRoute){
                     popUpTo(TelaInicialRoute){
                         inclusive = true
                     }
                 }
-            },valoresPassados.tamanho)
+            })
         }
     }
 }
